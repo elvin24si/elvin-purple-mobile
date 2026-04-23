@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
             val username = binding.editUsername.text.toString()
             val password = binding.editPassword.text.toString()
             if (username.isNotEmpty() && password.isNotEmpty()) {
-                val intent = Intent(this, WelcomeActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 Toast.makeText(this, "Welcome, $username!", Toast.LENGTH_SHORT).show()
             } else {

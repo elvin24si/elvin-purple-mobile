@@ -1,54 +1,60 @@
 package com.elvin.purple
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import com.elvin.purple.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
-    private val TAG = "MainActivity"
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val etAlas   = findViewById<EditText>(R.id.etAlasSegitiga)
-        val etTinggi = findViewById<EditText>(R.id.etTinggiSegitiga)
-        val btnSeg   = findViewById<Button>(R.id.btnHitungSegitiga)
-        val tvHasilSeg = findViewById<TextView>(R.id.tvHasilSegitiga)
-
-        btnSeg.setOnClickListener {
-            Log.e(TAG, "Mulai Perhitungan Bangun Datar Segitiga")
-            val alas   = etAlas.text.toString().toDoubleOrNull()
-            val tinggi = etTinggi.text.toString().toDoubleOrNull()
-            if (alas == null || tinggi == null) {
-                tvHasilSeg.text = "Hasil: input tidak valid"
-                return@setOnClickListener
-            }
-            val luas = 0.5 * alas * tinggi
-            tvHasilSeg.text = "Hasil: $luas cm²"
+        // 1. Tombol Rumus
+        binding.btnRumus.setOnClickListener {
+            val intent = Intent(this, RumusActivity::class.java)
+            intent.putExtra("judul", "Rumus Bangun Ruang")
+            intent.putExtra("desc", "Hitung volume dan luas segitiga dan balok di sini.")
+            startActivity(intent)
         }
 
-        val etPanjang = findViewById<EditText>(R.id.etPanjangBalok)
-        val etLebar   = findViewById<EditText>(R.id.etLebarBalok)
-        val etTinggiB = findViewById<EditText>(R.id.etTinggiBalok)
-        val btnBalok  = findViewById<Button>(R.id.btnHitungBalok)
-        val tvHasilBalok = findViewById<TextView>(R.id.tvHasilBalok)
+        // 2. Tombol Welcome
+        binding.btnWelcome.setOnClickListener {
+            val intent = Intent(this, WelcomeActivity::class.java)
+            intent.putExtra("judul", "Welcome Screen")
+            intent.putExtra("desc", "Selamat datang di ekosistem WhiteFrame Labs.")
+            startActivity(intent)
+        }
 
-        btnBalok.setOnClickListener {
-            Log.e(TAG, "Mulai Perhitungan Bangun Ruang Balok")
-            val p = etPanjang.text.toString().toDoubleOrNull()
-            val l = etLebar.text.toString().toDoubleOrNull()
-            val t = etTinggiB.text.toString().toDoubleOrNull()
-            if (p == null || l == null || t == null) {
-                tvHasilBalok.text = "Hasil: input tidak valid"
-                return@setOnClickListener
+        // 3. Tombol About
+        binding.btnAbout.setOnClickListener {
+            val intent = Intent(this, AboutActivity::class.java)
+            intent.putExtra("judul", "About Us")
+            intent.putExtra("desc", "Misi kami memperbaiki standar PC Indonesia.")
+            startActivity(intent)
+        }
+
+        // 4. Tombol Logout
+        binding.btnLogout.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Konfirmasi")
+            builder.setMessage("Yakin ingin Logout?")
+
+            builder.setPositiveButton("Iya") { _, _ ->
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
-            val volume = p * l * t
-            tvHasilBalok.text = "Hasil: $volume cm³"
+
+            builder.setNegativeButton("Tidak") { _, _ ->
+                Snackbar.make(binding.root, "Logout dibatalkan", Snackbar.LENGTH_SHORT).show()
+            }
+            builder.show()
         }
     }
 }

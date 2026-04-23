@@ -6,27 +6,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.elvin.purple.databinding.ActivityWelcomeBinding
 
-class WelcomeActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityWelcomeBinding
-
+class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val judul = intent.getStringExtra("judul")
         val deskripsi = intent.getStringExtra("desc")
         findViewById<TextView>(R.id.tvJudul).text = judul
         findViewById<TextView>(R.id.tvDeskripsi).text = deskripsi
-
-        binding = ActivityWelcomeBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(binding.root)
+        setContentView(R.layout.activity_about)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
     }
 }
