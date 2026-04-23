@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 1. Tombol Rumus
         binding.btnRumus.setOnClickListener {
             val intent = Intent(this, RumusActivity::class.java)
             intent.putExtra("judul", "Rumus Bangun Ruang")
@@ -24,7 +23,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // 2. Tombol Welcome
         binding.btnWelcome.setOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
             intent.putExtra("judul", "Welcome Screen")
@@ -32,7 +30,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // 3. Tombol About
         binding.btnAbout.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
             intent.putExtra("judul", "About Us")
@@ -40,7 +37,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // 4. Tombol Logout
         binding.btnLogout.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Konfirmasi")

@@ -14,14 +14,14 @@ class WelcomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityWelcomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        enableEdgeToEdge()
         val judul = intent.getStringExtra("judul")
         val deskripsi = intent.getStringExtra("desc")
-        findViewById<TextView>(R.id.tvJudul).text = judul
-        findViewById<TextView>(R.id.tvDeskripsi).text = deskripsi
 
-        binding = ActivityWelcomeBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
-        setContentView(binding.root)
+        binding.tvJudul.text = judul
+        binding.tvDeskripsi.text = deskripsi
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
