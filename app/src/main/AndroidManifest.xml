@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Elvinpurple">
         <activity
-            android:name=".WebViewActivity"
+            android:name=".BaseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.WebViewActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreenActivity"
@@ -24,22 +29,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AuthActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AboutActivity"
+            android:name=".Home.AboutActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".Home.WelcomeActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".RumusActivity"
+            android:name=".Home.RumusActivity"
             android:exported="false" />
     </application>
 

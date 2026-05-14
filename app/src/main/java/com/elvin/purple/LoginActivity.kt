@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
                 editor.apply()
 
                 // Navigasi ke MainActivity
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, BaseActivity::class.java)
                 startActivity(intent)
 
                 Toast.makeText(this, "Welcome, $username!", Toast.LENGTH_SHORT).show()

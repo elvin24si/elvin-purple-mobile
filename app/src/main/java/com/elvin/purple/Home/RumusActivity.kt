@@ -1,4 +1,4 @@
-package com.elvin.purple
+package com.elvin.purple.Home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import com.elvin.purple.R
 
 class RumusActivity : AppCompatActivity() {
 

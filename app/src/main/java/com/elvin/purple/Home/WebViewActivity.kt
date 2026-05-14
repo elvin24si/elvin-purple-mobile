@@ -1,10 +1,11 @@
-package com.elvin.purple
+package com.elvin.purple.Home
 
 import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.elvin.purple.R
 
 class WebViewActivity : AppCompatActivity() {
 

@@ -20,16 +20,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Subtle soft blue accent at the top -->
-    <View
-        android:id="@+id/topBackground"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/gradient_bg"
-        android:alpha="0.4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/headerContainer"
@@ -71,6 +61,14 @@
             android:alpha="0.7"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/robotomono"/>
+
+        <View
+            android:id="@+id/topBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.4"
+            android:background="@drawable/gradient_bg"
+            app:layout_constraintHeight_percent="0.6" />
     </LinearLayout>
 
     <LinearLayout

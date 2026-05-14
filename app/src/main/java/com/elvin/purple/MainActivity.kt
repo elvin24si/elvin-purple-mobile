@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.elvin.purple.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import android.content.Context
+import com.elvin.purple.Home.AboutActivity
+import com.elvin.purple.Home.RumusActivity
+import com.elvin.purple.Home.WebViewActivity
+import com.elvin.purple.Home.WelcomeActivity
 
 class MainActivity : AppCompatActivity() {
 
