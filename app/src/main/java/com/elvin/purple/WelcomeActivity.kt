@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.elvin.purple.databinding.ActivityWelcomeBinding
@@ -17,11 +18,20 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
-        val judul = intent.getStringExtra("judul")
-        val deskripsi = intent.getStringExtra("desc")
 
-        binding.tvJudul.text = judul
-        binding.tvDeskripsi.text = deskripsi
+        val toolbar: Toolbar = findViewById(R.id.toolbarWelcome)
+        setSupportActionBar(toolbar)
+
+        val judul = intent.getStringExtra("judul")
+
+        supportActionBar?.title = judul
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

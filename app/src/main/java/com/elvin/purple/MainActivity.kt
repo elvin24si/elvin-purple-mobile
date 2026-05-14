@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.elvin.purple.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
+import android.content.Context
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,14 +27,21 @@ class MainActivity : AppCompatActivity() {
         binding.btnWelcome.setOnClickListener {
             val intent = Intent(this, WelcomeActivity::class.java)
             intent.putExtra("judul", "Welcome Screen")
-            intent.putExtra("desc", "Selamat datang di ekosistem WhiteFrame Labs.")
+            intent.putExtra("desc", "Selamat datang ke App Bina Desa.")
+            startActivity(intent)
+        }
+
+        binding.btnWebView.setOnClickListener {
+            val intent = Intent(this, WebViewActivity::class.java)
+            intent.putExtra("url", "https://elvin24pcr.alwaysdata.net/")
+            intent.putExtra("judul", "Web View Bina Desa")
             startActivity(intent)
         }
 
         binding.btnAbout.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
             intent.putExtra("judul", "About Us")
-            intent.putExtra("desc", "Misi kami memperbaiki standar PC Indonesia.")
+            intent.putExtra("desc", "Kami App pengurusan produk hukum dan dokumen publik.")
             startActivity(intent)
         }
 
@@ -43,6 +51,12 @@ class MainActivity : AppCompatActivity() {
             builder.setMessage("Yakin ingin Logout?")
 
             builder.setPositiveButton("Iya") { _, _ ->
+                val sharedPref = getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+                val editor = sharedPref.edit()
+
+                editor.putBoolean("isLogin", false)
+                editor.apply()
+
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }

@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 
 class RumusActivity : AppCompatActivity() {
 
@@ -14,8 +15,21 @@ class RumusActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rumus)
+
+        val toolbar: Toolbar = findViewById(R.id.toolbarRumus)
+        setSupportActionBar(toolbar)
+
         val judul = intent.getStringExtra("judul")
         val deskripsi = intent.getStringExtra("desc")
+        
+        supportActionBar?.title = judul
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         findViewById<TextView>(R.id.tvJudul).text = judul
         findViewById<TextView>(R.id.tvDeskripsi).text = deskripsi
 

@@ -5,27 +5,37 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".RumusActivity">
 
-    <!-- ========== LUAS SEGITIGA ========== -->
+    <!-- REQUIRED TOOLBAR -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarRumus"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:title="judul"
+        app:titleTextColor="@color/textPrimary"
+        app:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- MATCHING SPLASH BACKGROUND -->
     <View
         android:id="@+id/topBackground2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="108dp"
         android:background="@drawable/gradient_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.7"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarRumus" />
 
+    <!-- Content Adjusted to start below Toolbar -->
     <TextView
         android:id="@+id/tvJudul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/robotomono"
         android:text="Judul"
         android:textColor="@color/agakitem"
@@ -33,7 +43,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarRumus" />
 
     <TextView
         android:id="@+id/tvDeskripsi"
@@ -49,26 +59,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvJudul" />
 
+    <!-- ========== LUAS SEGITIGA ========== -->
+
     <TextView
         android:id="@+id/tvLabelSegitiga"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="32dp"
         android:text="Luas Segitiga"
+        android:textStyle="bold"
+        android:fontFamily="@font/robotomono"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvDeskripsi" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDeskripsi" />
 
     <EditText
         android:id="@+id/etAlasSegitiga"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/edittext_rounded"
         android:ems="10"
         android:fontFamily="@font/robotomono"
         android:hint="Input Alas"
         android:inputType="numberDecimal"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLabelSegitiga" />
@@ -83,6 +98,7 @@
         android:hint="Input Tinggi"
         android:fontFamily="@font/robotomono"
         android:inputType="numberDecimal"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etAlasSegitiga" />
@@ -117,8 +133,10 @@
         android:id="@+id/tvLabelBalok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="32dp"
         android:text="Volume Balok"
+        android:textStyle="bold"
+        android:fontFamily="@font/robotomono"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHasilSegitiga" />
@@ -127,12 +145,13 @@
         android:id="@+id/etPanjangBalok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Input Panjang"
         android:background="@drawable/edittext_rounded"
         android:fontFamily="@font/robotomono"
         android:inputType="numberDecimal"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLabelBalok" />
@@ -147,6 +166,7 @@
         android:inputType="numberDecimal"
         android:background="@drawable/edittext_rounded"
         android:fontFamily="@font/robotomono"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPanjangBalok" />
@@ -161,6 +181,7 @@
         android:ems="10"
         android:hint="Input Tinggi"
         android:inputType="numberDecimal"
+        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etLebarBalok" />
