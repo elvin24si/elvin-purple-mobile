@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                 editor.apply()
 
                 startActivity(Intent(this, BaseActivity::class.java))
-                Toast.makeText(this, "Welcome, $usernameInput!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Selamat Datang $usernameInput!", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
                 binding.editUsername.error = "Username atau Password salah"
