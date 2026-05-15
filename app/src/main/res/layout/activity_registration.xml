@@ -65,24 +65,92 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="Login"
+                    android:text="Registrasi Akun Baru"
                     android:fontFamily="@font/robotomono"
                     android:textStyle="bold"
                     android:textColor="@color/textPrimary"
                     android:textSize="18sp"/>
 
                 <EditText
-                    android:id="@+id/editUsername"
+                    android:id="@+id/regNama"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:background="@drawable/edittext_rounded"
-                    android:hint="Username"
+                    android:hint="Nama Lengkap"
                     android:paddingStart="20dp"
                     android:fontFamily="@font/robotomono" />
 
                 <EditText
-                    android:id="@+id/editPassword"
+                    android:id="@+id/regTanggalLahir"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:hint="Tanggal Lahir"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:paddingStart="20dp"
+                    android:fontFamily="@font/robotomono" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Jenis Kelamin"
+                    android:fontFamily="@font/robotomono" />
+
+                <RadioGroup
+                    android:id="@+id/regGenderGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rbLaki"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Laki-laki"
+                        android:fontFamily="@font/robotomono"/>
+                    <RadioButton
+                        android:id="@+id/rbPerempuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Perempuan"
+                        android:fontFamily="@font/robotomono"/>
+                </RadioGroup>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusTopStart="12dp">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/regAgama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Pilih Agama"
+                        android:inputType="none"
+                        android:fontFamily="@font/robotomono" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <EditText
+                    android:id="@+id/regUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:hint="Username Baru"
+                    android:paddingStart="20dp"
+                    android:fontFamily="@font/robotomono" />
+
+                <EditText
+                    android:id="@+id/regPassword"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="12dp"
@@ -92,26 +160,27 @@
                     android:paddingStart="20dp"
                     android:fontFamily="@font/robotomono" />
 
+                <EditText
+                    android:id="@+id/regConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:hint="Konfirmasi Password"
+                    android:inputType="textPassword"
+                    android:paddingStart="20dp"
+                    android:fontFamily="@font/robotomono" />
+
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/btnRegister"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="24dp"
-                    android:text="LOGIN"
+                    android:text="DAFTAR"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/colorPrimary"
                     app:cornerRadius="12dp"
                     android:fontFamily="@font/robotomono"/>
-
-                <TextView
-                    android:id="@+id/txtToRegister"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="24dp"
-                    android:text="Belum punya akun? Daftar di sini"
-                    android:textColor="@color/textPrimary"
-                    android:fontFamily="@font/robotomono" />
 
             </LinearLayout>
         </LinearLayout>

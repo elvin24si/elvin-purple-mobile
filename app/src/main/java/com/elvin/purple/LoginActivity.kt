@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,8 +16,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // 1. Inisialisasi View Binding
         binding = ActivityLoginBinding.inflate(layoutInflater)
         enableEdgeToEdge()
         setContentView(binding.root)
@@ -29,41 +26,37 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
-        // 2. Logika Tombol Login dengan fitur AuthActivity
+        // --- LOGIKA LOGIN ---
         binding.btnLogin.setOnClickListener {
-            // Mengambil input menggunakan ViewBinding
-            val username = binding.editUsername.text.toString()
-            val password = binding.editPassword.text.toString()
+            val usernameInput = binding.editUsername.text.toString()
+            val passwordInput = binding.editPassword.text.toString()
 
-            // Validasi: Username harus sama dengan Password (sesuai logika AuthActivity Anda)
-            if (username == password && username.isNotEmpty()) {
+            val sharedPref = getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+            val savedUser = sharedPref.getString("reg_username", "")
+            val savedPass = sharedPref.getString("reg_password", "")
 
-                // Fitur: Simpan status login ke SharedPreferences
-                val sharedPref = getSharedPreferences("user_pref", Context.MODE_PRIVATE)
+            val rulePraktikum = (usernameInput == passwordInput && usernameInput.isNotEmpty())
+            val ruleSharedPref = (usernameInput == savedUser && passwordInput == savedPass && usernameInput.isNotEmpty())
+
+            if (rulePraktikum || ruleSharedPref) {
                 val editor = sharedPref.edit()
                 editor.putBoolean("isLogin", true)
-                editor.putString("username", username)
+                editor.putString("username", usernameInput)
                 editor.apply()
 
-                // Navigasi ke MainActivity
-                val intent = Intent(this, BaseActivity::class.java)
-                startActivity(intent)
-
-                Toast.makeText(this, "Welcome, $username!", Toast.LENGTH_SHORT).show()
-                finish() // Menutup LoginActivity agar tidak bisa kembali dengan tombol back
+                startActivity(Intent(this, BaseActivity::class.java))
+                Toast.makeText(this, "Welcome, $usernameInput!", Toast.LENGTH_SHORT).show()
+                finish()
             } else {
-                // Fitur: Tampilkan Dialog Error dari AuthActivity
-                showErrorDialog()
+                binding.editUsername.error = "Username atau Password salah"
+                binding.editPassword.error = "Periksa kembali kredensial Anda"
             }
         }
-    }
 
-    // Fungsi Dialog dari AuthActivity
-    private fun showErrorDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("Login Gagal")
-            .setMessage("Username dan Password harus sama dan tidak boleh kosong.")
-            .setPositiveButton("OK", null)
-            .show()
+        // --- NAVIGASI KE REGISTER ---
+        binding.txtToRegister.setOnClickListener {
+            val intent = Intent(this, RegistrationActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
