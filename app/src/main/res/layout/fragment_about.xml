@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        app:title="About"
+        app:title="Tentang"
         app:titleTextColor="@color/textPrimary"
         app:elevation="4dp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,106 +20,57 @@
     <View
         android:id="@+id/topBackgroundAbout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/gradient_bg"
-        android:alpha="0.2"
+        android:layout_height="220dp"
+        android:background="@drawable/bg_wavy_about"
+        android:alpha="0.8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarAbout" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         android:padding="24dp"
-        android:clipToPadding="false"
         app:layout_constraintTop_toBottomOf="@id/toolbarAbout"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Informasi &amp; Fitur"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/textPrimary"
+            android:fontFamily="@font/robotomono" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bina Desa Menu Selengkapnya"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/robotomono"
+            android:layout_marginBottom="24dp" />
+
+        <!-- THE LISTVIEW CONTAINER CARD -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tentang Program"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/textPrimary"
-                android:fontFamily="@font/robotomono" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Produk Hukum &amp; Dokumen Publik"
-                android:textSize="16sp"
-                android:textColor="@color/colorPrimary"
-                android:fontFamily="@font/robotomono"
-                android:layout_marginBottom="24dp" />
-
-            <!-- Definition Card -->
-            <com.google.android.material.card.MaterialCardView
+            <!-- ListView handles its own internal scrolling, so no ScrollView wrapper needed -->
+            <ListView
+                android:id="@+id/listViewAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="16dp">
+                android:divider="#EEEEEE"
+                android:dividerHeight="1dp"
+                android:padding="8dp"
+                android:clipToPadding="false"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+        </com.google.android.material.card.MaterialCardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Definisi"
-                        android:textStyle="bold"
-                        android:textColor="@color/textPrimary"
-                        android:layout_marginBottom="8dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Ini adalah program yang mempermudah pemrosesan, penyimpanan, dan pengaksesan produk hukum dan dokumen publik desa."
-                        android:lineSpacingExtra="4dp"
-                        android:textColor="#666666" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Features Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fitur Utama"
-                        android:textStyle="bold"
-                        android:textColor="@color/textPrimary"
-                        android:layout_marginBottom="12dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="- List Dokumen\n- Menambah dokumen\n- Edit Dokumen\n- Hapus Dokumen"
-                        android:lineSpacingExtra="8dp"
-                        android:textColor="#666666" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

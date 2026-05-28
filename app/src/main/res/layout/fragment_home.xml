@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
 
-    <!-- The Splash-style background stays in the fragment for visual consistency -->
     <View
         android:id="@+id/topBackground"
         android:layout_width="0dp"
@@ -30,8 +29,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/toolbarMain"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,20 +40,19 @@
             android:orientation="vertical"
             android:paddingBottom="32dp">
 
-            <!-- HEADER SECTION -->
             <LinearLayout
                 android:id="@+id/headerContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="24dp"
                 android:paddingHorizontal="20dp">
 
                 <ImageView
                     android:id="@+id/imgLogo"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/logo"
                     android:scaleType="fitCenter" />
 
@@ -61,9 +61,9 @@
                     android:layout_height="wrap_content"
                     android:text="BINA DESA"
                     android:textColor="@color/textPrimary"
-                    android:textSize="28sp"
+                    android:textSize="26sp"
                     android:textStyle="bold"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="12dp"
                     android:fontFamily="@font/robotomono"/>
 
                 <TextView
@@ -72,62 +72,112 @@
                     android:text="Produk Hukum dan Dokumen Publik"
                     android:textColor="@color/agakitem"
                     android:gravity="center"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:alpha="0.7"
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/robotomono"/>
             </LinearLayout>
 
-            <!-- MENU SECTION -->
             <LinearLayout
                 android:id="@+id/menuContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical"
-                android:paddingHorizontal="32dp">
+                android:paddingHorizontal="24dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnRumus"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="Rumus"
-                    android:textAllCaps="false"
-                    app:backgroundTint="@color/colorAccent"
-                    app:cornerRadius="12dp"
-                    android:textColor="@color/textPrimary"
-                    android:fontFamily="@font/robotomono" />
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    app:singleSelection="true"
+                    app:selectionRequired="true">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnWelcome"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="Welcome Screen"
-                    android:textAllCaps="false"
-                    app:backgroundTint="@color/colorAccent"
-                    app:cornerRadius="12dp"
-                    android:textColor="@color/textPrimary"
-                    android:fontFamily="@font/robotomono" />
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAll"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="All"
+                        android:fontFamily="@font/robotomono" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnWebView"
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipWeb"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Web"
+                        android:fontFamily="@font/robotomono" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipBonus"
+                        style="@style/Widget.MaterialComponents.Chip.Filter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bonus"
+                        android:fontFamily="@font/robotomono" />
+                </com.google.android.material.chip.ChipGroup>
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/dashboardGrid"
                     android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="Portal Web Bina Desa"
-                    android:textAllCaps="false"
-                    app:backgroundTint="@color/colorPrimary"
-                    app:cornerRadius="12dp"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/robotomono" />
+                    android:layout_height="wrap_content"
+                    app:columnCount="2">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRumus"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:text="Rumus"
+                        android:textAllCaps="false"
+                        android:textColor="@color/textPrimary"
+                        app:backgroundTint="@color/colorAccent"
+                        app:cornerRadius="12dp"
+                        android:fontFamily="@font/robotomono"
+                        app:layout_columnWeight="1"
+                        android:layout_margin="6dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWelcome"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:text="Welcome"
+                        android:textAllCaps="false"
+                        android:textColor="@color/textPrimary"
+                        app:backgroundTint="@color/colorAccent"
+                        app:cornerRadius="12dp"
+                        android:fontFamily="@font/robotomono"
+                        app:layout_columnWeight="1"
+                        android:layout_margin="6dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnWebView"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:layout_width="0dp"
+                        android:layout_height="80dp"
+                        android:text="Portal Web Bina Desa"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        app:backgroundTint="@color/colorPrimary"
+                        app:cornerRadius="12dp"
+                        android:fontFamily="@font/robotomono"
+                        app:layout_columnSpan="2"
+                        app:layout_columnWeight="1"
+                        android:layout_margin="6dp"/>
+
+                </androidx.gridlayout.widget.GridLayout>
 
                 <TextView
                     android:id="@+id/btnLogout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
                     android:text="Logout Session"
                     android:textColor="#FF5252"
                     android:textStyle="bold"

@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.elvin.purple.LoginActivity
 import com.elvin.purple.R
 import com.elvin.purple.databinding.FragmentHomeBinding
+import com.google.android.material.chip.Chip
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,6 +70,34 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
+        }
+
+        binding.chipGroupFilter.setOnCheckedStateChangeListener { group, checkedIds ->
+            val selectedChipId = checkedIds.firstOrNull() // Ambil ID chip yang dipilih
+            if (selectedChipId != null) {
+                val chip = group.findViewById<Chip>(selectedChipId)
+
+                // standard Fragment toast context is 'requireContext()' instead of 'this'
+                Toast.makeText(requireContext(), "Filter: ${chip.text}", Toast.LENGTH_SHORT).show()
+
+                when (selectedChipId) {
+                    R.id.chipAll -> {
+                        binding.btnRumus.visibility = View.VISIBLE
+                        binding.btnWelcome.visibility = View.VISIBLE
+                        binding.btnWebView.visibility = View.VISIBLE
+                    }
+                    R.id.chipWeb -> {
+                        binding.btnRumus.visibility = View.GONE
+                        binding.btnWelcome.visibility = View.GONE
+                        binding.btnWebView.visibility = View.VISIBLE
+                    }
+                    R.id.chipBonus -> {
+                        binding.btnRumus.visibility = View.VISIBLE
+                        binding.btnWelcome.visibility = View.VISIBLE
+                        binding.btnWebView.visibility = View.GONE
+                    }
+                }
+            }
         }
     }
 
