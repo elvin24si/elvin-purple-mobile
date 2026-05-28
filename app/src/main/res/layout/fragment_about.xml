@@ -65,10 +65,10 @@
                 android:id="@+id/listViewAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clipToPadding="false"
                 android:divider="#EEEEEE"
                 android:dividerHeight="1dp"
-                android:padding="8dp"
-                android:clipToPadding="false"/>
+                android:padding="8dp" />
 
         </com.google.android.material.card.MaterialCardView>
 
