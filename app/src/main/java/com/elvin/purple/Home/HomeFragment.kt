@@ -8,21 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.elvin.purple.LoginActivity
 import com.elvin.purple.R
+import com.elvin.purple.data.api.NewsApiClient // Pastikan package API Client Anda benar
 import com.elvin.purple.databinding.FragmentHomeBinding
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
@@ -38,6 +31,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Ambil berita pertama kali saat fragment dimuat
+        fetchBeritaTerkini()
+
+        // Tombol Refresh Berita dari XML
+        binding.btnRefreshNews.setOnClickListener {
+            fetchBeritaTerkini()
+        }
 
         // 1. Rumus Button
         binding.btnRumus.setOnClickListener {
@@ -58,7 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         // 3. Web View Button
         binding.btnWebView.setOnClickListener {
             val intent = Intent(requireContext(), WebViewActivity::class.java)
-            intent.putExtra("url", "https://elvin24pcr.alwaysdata.net/") // Placeholder
+            intent.putExtra("url", "https://elvin24pcr.alwaysdata.net/")
             intent.putExtra("title", "Portal Web Bina Desa")
             startActivity(intent)
         }
@@ -72,12 +73,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             requireActivity().finish()
         }
 
+        // Chip Filter Logic
         binding.chipGroupFilter.setOnCheckedStateChangeListener { group, checkedIds ->
-            val selectedChipId = checkedIds.firstOrNull() // Ambil ID chip yang dipilih
+            val selectedChipId = checkedIds.firstOrNull()
             if (selectedChipId != null) {
                 val chip = group.findViewById<Chip>(selectedChipId)
-
-                // standard Fragment toast context is 'requireContext()' instead of 'this'
                 Toast.makeText(requireContext(), "Filter: ${chip.text}", Toast.LENGTH_SHORT).show()
 
                 when (selectedChipId) {
@@ -97,6 +97,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         binding.btnWebView.visibility = View.GONE
                     }
                 }
+            }
+        }
+    }
+
+    // Fungsi Pengambilan REST API Berita ala Modul Kampus
+    private fun fetchBeritaTerkini() {
+        binding.tvNewsTitle.text = "Memuat berita..."
+        binding.tvNewsDesc.text = ""
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = NewsApiClient.apiService.getNews()
+
+                if (response.status == "OK" && response.data.isNotEmpty()) {
+                    val beritaUtama = response.data[0]
+
+                    binding.tvNewsTitle.text = beritaUtama.title
+                    binding.tvNewsDesc.text = beritaUtama.description ?: "Tidak ada deskripsi untuk berita ini."
+                } else {
+                    binding.tvNewsTitle.text = "Format data API tidak sesuai atau data kosong."
+                }
+            } catch (e: Exception) {
+                binding.tvNewsTitle.text = "Gagal memuat berita."
+                binding.tvNewsDesc.text = "Terjadi gangguan parsing data."
+                android.util.Log.e("API_ERROR", "Detail Error: ${e.localizedMessage}", e)
             }
         }
     }

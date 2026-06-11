@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor">
@@ -185,6 +186,46 @@
                     android:padding="12dp"
                     android:fontFamily="@font/robotomono" />
 
+                <TextView
+                    android:id="@+id/tvTitleBerita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Berita Terkini Bina Desa:"
+                    android:textColor="@color/textPrimary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/robotomono" />
+
+                <TextView
+                    android:id="@+id/tvNewsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Loading judul berita..."
+                    android:textColor="@color/textPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/robotomono" />
+
+                <TextView
+                    android:id="@+id/tvNewsDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Loading deskripsi berita..."
+                    android:textColor="@color/agakitem"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/robotomono" />
+
+                <Button
+                    android:id="@+id/btnRefreshNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Refresh Berita"
+                    android:fontFamily="@font/robotomono" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
