@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Elvinpurple">
         <activity
+            android:name=".Onboard.OnboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegistrationActivity"
             android:exported="false" />
         <activity
