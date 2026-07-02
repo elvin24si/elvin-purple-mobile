@@ -35,6 +35,7 @@ class AboutFragment : Fragment() {
             tab.text = when (position) {
                 0 -> "Menu Utama"
                 1 -> "Info Tambahan"
+                2 -> "Dokumen"
                 else -> null
             }
         }.attach()
@@ -42,12 +43,13 @@ class AboutFragment : Fragment() {
 
     // Inner ViewPager Adapter Class
     private class AboutPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-        override fun getItemCount(): Int = 2
+        override fun getItemCount(): Int = 3
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> AboutMenuFragment()
                 1 -> AboutExtraFragment()
+                2 -> LegalDocumentFragment()
                 else -> throw IllegalStateException("Unexpected position $position")
             }
         }

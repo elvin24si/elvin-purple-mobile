@@ -3,7 +3,6 @@ package com.elvin.purple.data.model
 import com.google.gson.annotations.SerializedName
 
 data class NewsResponse(
-    // Kita gunakan @SerializedName untuk mengantisipasi perbedaan nama variabel
     @SerializedName("status")
     val status: String,
 
