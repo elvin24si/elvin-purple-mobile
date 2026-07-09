@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.elvin.purple.databinding.ActivityLoginBinding
+import com.google.android.material.snackbar.Snackbar
 
 class LoginActivity : AppCompatActivity() {
 
@@ -24,6 +25,10 @@ class LoginActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        if (intent.getBooleanExtra("SHOW_LOGOUT_SNACKBAR", false)) {
+            Snackbar.make(binding.root, "Anda telah berhasil keluar", Snackbar.LENGTH_LONG).show()
         }
 
         // --- LOGIKA LOGIN ---

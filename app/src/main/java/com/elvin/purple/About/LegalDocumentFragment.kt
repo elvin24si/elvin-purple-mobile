@@ -7,22 +7,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elvin.purple.BaseActivity
+import com.elvin.purple.data.local.AppDatabase
+import com.elvin.purple.data.local.LegalDocumentDao
 import com.elvin.purple.databinding.FragmentLegalDocumentBinding
-import com.elvin.purple.model.LegalDocument
+
 import com.elvin.purple.utils.PermissionHelper
 import com.elvin.purple.utils.NotificationHelper
 import com.elvin.purple.utils.ReminderHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 
 class LegalDocumentFragment : Fragment() {
 
     private var _binding: FragmentLegalDocumentBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var database: AppDatabase
+    private lateinit var dao: LegalDocumentDao
+    private lateinit var adapter: LegalDocumentAdapter
 
     // Register launcher untuk request permission sesuai struktur PermissionHelper
     private val requestPermissionLauncher = registerForActivityResult(
@@ -35,12 +48,6 @@ class LegalDocumentFragment : Fragment() {
         }
     }
 
-    private val documentList = listOf(
-        LegalDocument("1", "UU Hak Cipta Digital", "12 Februari 2026", "Terbatas", "Dokumen mengenai regulasi hak cipta konten di platform digital."),
-        LegalDocument("2", "NDAs Vendor Aplikasi", "05 Maret 2026", "Rahasia", "Perjanjian kerahasiaan antara pihak pengembang dan pihak ketiga."),
-        LegalDocument("3", "Kebijakan Privasi Pengguna v2.1", "20 Mei 2026", "Publik", "Draf pembaruan kebijakan penanganan data privasi pengguna aplikasi.")
-    )
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,14 +59,108 @@ class LegalDocumentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = LegalDocumentAdapter(documentList) { document ->
+        // Inisialisasi database Room
+        database = AppDatabase.getDatabase(requireContext())
+        dao = database.legalDocumentDao()
+
+        // Inisialisasi adapter dengan list kosong terlebih dahulu
+        adapter = LegalDocumentAdapter(emptyList()) { document ->
             handleRequestAccess()
         }
 
         binding.recyclerViewDocument.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            this.adapter = adapter
+            this.adapter = this@LegalDocumentFragment.adapter
         }
+
+        // Ambil data dari Room secara asinkron
+        loadDocuments()
+
+        // Handle tambah dokumen baru via FAB
+        binding.fabAddDocument.setOnClickListener {
+            showAddDocumentDialog()
+        }
+    }
+
+    private fun loadDocuments() {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            var list = dao.getAllDocuments()
+            
+            // Jika database kosong, lakukan seeding data awal
+            if (list.isEmpty()) {
+                val seedData = listOf(
+                    LegalDocument(title = "UU Hak Cipta Digital", date = "12 Feb 2026", status = "Terbatas", description = "Dokumen mengenai regulasi hak cipta konten di platform digital."),
+                    LegalDocument(title = "NDAs Vendor Aplikasi", date = "05 Mar 2026", status = "Rahasia", description = "Perjanjian kerahasiaan antara pihak pengembang dan pihak ketiga."),
+                    LegalDocument(title = "Kebijakan Privasi Pengguna v2.1", date = "20 Mei 2026", status = "Publik", description = "Draf pembaruan kebijakan penanganan data privasi pengguna aplikasi.")
+                )
+                dao.insertDocuments(seedData)
+                list = dao.getAllDocuments()
+            }
+
+            withContext(Dispatchers.Main) {
+                adapter.updateData(list)
+            }
+        }
+    }
+
+    private fun showAddDocumentDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Tambah Dokumen Hukum")
+
+        // Buat form input programmatically
+        val layout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(50, 20, 50, 20)
+        }
+
+        val etTitle = EditText(requireContext()).apply {
+            hint = "Judul Dokumen"
+        }
+        val etStatus = EditText(requireContext()).apply {
+            hint = "Status (misal: Publik, Rahasia)"
+        }
+        val etDesc = EditText(requireContext()).apply {
+            hint = "Deskripsi Dokumen"
+        }
+
+        layout.addView(etTitle)
+        layout.addView(etStatus)
+        layout.addView(etDesc)
+        builder.setView(layout)
+
+        builder.setPositiveButton("Simpan") { dialog, _ ->
+            val title = etTitle.text.toString().trim()
+            val status = etStatus.text.toString().trim()
+            val desc = etDesc.text.toString().trim()
+
+            if (title.isNotEmpty() && status.isNotEmpty() && desc.isNotEmpty()) {
+                val today = java.text.SimpleDateFormat("dd MMM yyyy", java.util.Locale.getDefault()).format(java.util.Date())
+                val newDocument = LegalDocument(
+                    title = title,
+                    date = today,
+                    status = status,
+                    description = desc
+                )
+
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                    dao.insertDocument(newDocument)
+                    val updatedList = dao.getAllDocuments()
+                    withContext(Dispatchers.Main) {
+                        adapter.updateData(updatedList)
+                        Toast.makeText(requireContext(), "Dokumen berhasil disimpan!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Semua kolom harus diisi!", Toast.LENGTH_SHORT).show()
+            }
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Batal") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        builder.show()
     }
 
     private fun handleRequestAccess() {
@@ -88,18 +189,10 @@ class LegalDocumentFragment : Fragment() {
             intent = dummyIntent
         )
 
-        // 2. Hitung waktu 10 detik ke depan untuk dimasukkan ke setReminder milikmu
-        val calendar = Calendar.getInstance().apply {
-            add(Calendar.SECOND, 10)
-        }
-        val targetHour = calendar.get(Calendar.HOUR_OF_DAY)
-        val targetMinute = calendar.get(Calendar.MINUTE)
-
-        // 3. Set Reminder menggunakan fungsi asli dari ReminderHelper-mu
-        ReminderHelper.setReminder(
+        // 3. Set Reminder selama 10 detik menggunakan fungsi setReminderInSeconds
+        ReminderHelper.setReminderInSeconds(
             context = requireContext(),
-            hour = targetHour,
-            minute = targetMinute,
+            seconds = 10,
             title = "Akses Diberikan",
             message = "Akses dokumen hukum telah disetujui. Ketuk untuk melihat.",
             targetActivity = BaseActivity::class.java

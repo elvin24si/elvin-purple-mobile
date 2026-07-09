@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.elvin.purple.About.AboutFragment
 import com.elvin.purple.About.RequestSuccessFragment
 import com.elvin.purple.Home.HomeFragment
+import com.elvin.purple.Home.Camera.CameraFragment
 import com.elvin.purple.Profile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -30,6 +31,7 @@ class BaseActivity : AppCompatActivity() {
                 R.id.nav_home -> replaceFragment(HomeFragment())
                 R.id.nav_about -> replaceFragment(AboutFragment())
                 R.id.nav_profile -> replaceFragment(ProfileFragment())
+                R.id.nav_camera -> replaceFragment(CameraFragment())
             }
             true
         }

@@ -10,7 +10,6 @@ class ReminderReceiver : BroadcastReceiver() {
         val title = intent.getStringExtra("title") ?: "Akses Diberikan"
         val message = intent.getStringExtra("message") ?: "Akses dokumen hukum telah disetujui."
 
-        // Ubah target ke BaseActivity
         val notificationIntent = Intent(context, BaseActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("NAVIGATE_TO", "SUCCESS_FRAGMENT")

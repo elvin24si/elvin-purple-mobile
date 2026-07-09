@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.elvin.purple.databinding.ItemLegalDocumentBinding
-import com.elvin.purple.model.LegalDocument
+
 
 class LegalDocumentAdapter(
-    private val documentList: List<LegalDocument>,
+    private var documentList: List<LegalDocument>,
     private val onRequestAccessClick: (LegalDocument) -> Unit
 ) : RecyclerView.Adapter<LegalDocumentAdapter.DocumentViewHolder>() {
 
@@ -35,4 +35,9 @@ class LegalDocumentAdapter(
     }
 
     override fun getItemCount(): Int = documentList.size
+
+    fun updateData(newList: List<LegalDocument>) {
+        this.documentList = newList
+        notifyDataSetChanged()
+    }
 }

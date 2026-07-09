@@ -51,4 +51,37 @@ object ReminderHelper {
             pendingIntent
         )
     }
+
+    fun setReminderInSeconds(
+        context: Context,
+        seconds: Int,
+        title: String,
+        message: String,
+        targetActivity: Class<*>
+    ) {
+        val calendar = Calendar.getInstance().apply {
+            add(Calendar.SECOND, seconds)
+        }
+
+        val intent = Intent(context, ReminderReceiver::class.java).apply {
+            putExtra("title", title)
+            putExtra("message", message)
+            putExtra("target_activity", targetActivity.name)
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            1, // Request code yang berbeda agar tidak menimpa alarm harian jika ada
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
+    }
 }

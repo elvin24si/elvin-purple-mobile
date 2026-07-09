@@ -13,7 +13,9 @@ import com.elvin.purple.LoginActivity
 import com.elvin.purple.R
 import com.elvin.purple.data.api.NewsApiClient // Pastikan package API Client Anda benar
 import com.elvin.purple.databinding.FragmentHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -31,6 +33,22 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Setup Option Menu pada Toolbar
+        binding.toolbarMain.inflateMenu(R.menu.main_menu)
+        binding.toolbarMain.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_search -> {
+                    Toast.makeText(requireContext(), "Search Clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.action_settings -> {
+                    Toast.makeText(requireContext(), "Settings Clicked", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
 
         // Ambil berita pertama kali saat fragment dimuat
         fetchBeritaTerkini()
@@ -64,13 +82,31 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             startActivity(intent)
         }
 
+        // 5. Pertemuan 13 Button (Camera, Scan & QR Code)
+        binding.btnPertemuan13.setOnClickListener {
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
+            bottomNav.selectedItemId = R.id.nav_camera
+        }
+
         // 4. Logout Logic
         binding.btnLogout.setOnClickListener {
-            val sharedPref = requireActivity().getSharedPreferences("user_pref", Context.MODE_PRIVATE)
-            sharedPref.edit().putBoolean("isLogin", false).apply()
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Konfirmasi Keluar")
+                .setMessage("Apakah Anda yakin ingin keluar dari aplikasi?")
+                .setNegativeButton("Batal") { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .setPositiveButton("Keluar") { _, _ ->
+                    val sharedPref = requireActivity().getSharedPreferences("user_pref", android.content.Context.MODE_PRIVATE)
+                    sharedPref.edit().putBoolean("isLogin", false).apply()
 
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
-            requireActivity().finish()
+                    val intent = android.content.Intent(requireContext(), LoginActivity::class.java).apply {
+                        putExtra("SHOW_LOGOUT_SNACKBAR", true)
+                    }
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
+                .show()
         }
 
         // Chip Filter Logic

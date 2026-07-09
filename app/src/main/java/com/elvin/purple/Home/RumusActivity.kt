@@ -70,4 +70,9 @@ class RumusActivity : AppCompatActivity() {
             tvHasilBalok.text = "Hasil: $volume cm³"
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        Log.e("onStart", "onStart: Rumus Activity terlihat di layar")
+    }
 }
